@@ -57,6 +57,7 @@ nav ul a:hover{color:var(--rose-dd);border-color:var(--gold)}
 .seal .disc::after{content:"";position:absolute;inset:26px;border-radius:50%;background:radial-gradient(circle at 35% 28%,#FBF3E6,var(--rose-l) 100%);opacity:.75}
 .seal .lb{position:relative;z-index:1;font-family:var(--script);font-size:clamp(100px,20vw,150px);color:var(--gold-d);line-height:1;transform:translateY(-4px)}
 .seal .spark{position:absolute;color:var(--gold);font-size:26px;line-height:1}
+.seal::before,.seal::after{content:"";position:absolute;inset:0;border-radius:50%;border:1.5px solid var(--gold);opacity:0;pointer-events:none}
 .spark.a{top:2px;right:14px}.spark.b{bottom:22px;left:-6px;font-size:18px}
 @media(max-width:760px){.hero .wrap{grid-template-columns:1fr}.seal{order:-1;width:190px}.hero{padding:44px 0 64px}}
 
@@ -120,14 +121,44 @@ form .btn{width:100%;text-align:center;font-size:16px;padding:16px}
 footer{background:var(--rose-l);border-top:1px solid var(--line);padding:38px 0 44px;text-align:center;font-size:14px;color:var(--ink-soft)}
 footer .logo{display:block;font-size:44px;margin-bottom:8px}
 
+/* assinatura do hero */
+.hero h1 .script.name{display:inline-block;position:relative;max-width:100%}
+.name .ink{display:inline-block}
+.nib{position:absolute;top:46%;left:100%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;opacity:0;pointer-events:none;background:radial-gradient(circle,#fff 0,var(--gold) 38%,transparent 72%)}
+.lash{display:block;white-space:nowrap}
+.lash .ch{display:inline-block}
+.flourish{display:block;width:min(230px,60%);height:auto;margin-top:14px;overflow:visible}
+.flourish path{fill:none;stroke:var(--gold);stroke-width:1.5;stroke-linecap:round}
+.flourish circle{fill:var(--gold)}
+
+/* entrada: o nome é escrito, "Lash Design" surge letra a letra, o traço desenha */
 @media(prefers-reduced-motion:no-preference){
-  .seal .disc{animation:stamp .9s cubic-bezier(.2,1.2,.4,1) both}
-  .seal .lb{animation:fadeIn 1.1s .4s both}
-  .hero h1,.hero .lead,.hero .cta{animation:fadeIn .9s .2s both}
+  nav{animation:fadeIn 1.6s both}
+  .name .ink{animation:write 4s .7s cubic-bezier(.45,0,.25,1) both}
+  .nib{animation:nib 4s .7s cubic-bezier(.45,0,.25,1) both}
+  .lash .ch{animation:letter 1.4s cubic-bezier(.22,.61,.36,1) both;animation-delay:calc(4.2s + var(--i)*.155s)}
+  .flourish path{stroke-dasharray:1 1;animation:draw 2.4s 6.1s cubic-bezier(.45,0,.25,1) both}
+  .flourish circle{transform-box:fill-box;transform-origin:center;animation:pop 1.2s 7.9s cubic-bezier(.22,.8,.3,1) both}
+  .hero .lead{animation:rise 1.8s 6.5s cubic-bezier(.22,.61,.36,1) both}
+  .hero .cta{animation:rise 1.8s 7.1s cubic-bezier(.22,.61,.36,1) both}
+  .seal .disc{animation:stamp 1.9s .25s cubic-bezier(.22,.8,.3,1) both}
+  .seal .lb{animation:write 3.1s 1.6s cubic-bezier(.45,0,.25,1) both,glow 3.6s 5s ease-in-out infinite}
+  .seal::before{animation:ring 3.6s 5s cubic-bezier(.2,.6,.3,1) infinite}
+  .seal::after{animation:ring 3.6s 6.8s cubic-bezier(.2,.6,.3,1) infinite}
+  .spark.a{animation:pop 1.2s 4.8s cubic-bezier(.22,.8,.3,1) both}
+  .spark.b{animation:pop 1.2s 5.4s cubic-bezier(.22,.8,.3,1) both}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 @keyframes stamp{from{transform:scale(1.25) rotate(-10deg);opacity:0}to{transform:none;opacity:1}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes write{from{clip-path:inset(-40% 100% -40% -6%)}to{clip-path:inset(-40% -6% -40% -6%)}}
+@keyframes nib{0%{left:0;opacity:0}6%{opacity:1}92%{opacity:1}100%{left:100%;opacity:0}}
+@keyframes letter{from{opacity:0;transform:translateY(.28em);filter:blur(6px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{stroke-dashoffset:1;opacity:1}100%{stroke-dashoffset:0;opacity:1}}
+@keyframes pop{from{opacity:0;transform:scale(.2) rotate(-40deg)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes ring{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.3);opacity:0}}
+@keyframes glow{0%,100%{text-shadow:0 0 0 rgba(184,146,74,0)}30%{text-shadow:0 0 26px rgba(184,146,74,.7),0 0 6px rgba(184,146,74,.4)}}
 </style>
 </head>
 <body>
@@ -148,7 +179,11 @@ footer .logo{display:block;font-size:44px;margin-bottom:8px}
 <header class="hero" id="topo">
   <div class="wrap">
     <div>
-      <h1><span class="script">Letícia Beatriz</span>Lash Design</h1>
+      <h1 aria-label="Letícia Beatriz Lash Design">
+        <span class="script name" aria-hidden="true"><span class="ink">Letícia Beatriz</span><i class="nib"></i></span>
+        <span class="lash" aria-hidden="true"><span class="ch" style="--i:0">L</span><span class="ch" style="--i:1">a</span><span class="ch" style="--i:2">s</span><span class="ch" style="--i:3">h</span><span class="ch" style="--i:4">&nbsp;</span><span class="ch" style="--i:5">D</span><span class="ch" style="--i:6">e</span><span class="ch" style="--i:7">s</span><span class="ch" style="--i:8">i</span><span class="ch" style="--i:9">g</span><span class="ch" style="--i:10">n</span></span>
+        <svg class="flourish" viewBox="0 0 300 24" aria-hidden="true"><path pathLength="1" d="M2 14C50 4 90 22 150 12S250 6 288 12"/><circle cx="295" cy="12" r="2.8"/></svg>
+      </h1>
       <p class="lead">Um olhar marcante, feito com carinho e cuidado em cada fio.</p>
       <div class="cta">
         <a class="btn" href="#agendar">Agendar meu horário</a>
